@@ -1,0 +1,25 @@
+{
+  "name": "load-balancer-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "WS_ENDPOINT=https://ws-bots-beta.teslatele.com/ node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/teslatelecom/load-balancer-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/teslatelecom/load-balancer-bot#readme",
+  "dependencies": {
+    "cron": "^1.3.0",
+    "mongodb": "^2.2.33",
+    "workonflow-bot-client": "0.0.5"
+  },
+  "devDependencies": {
+    "standard": "^11.0.1"
+  }
+}
