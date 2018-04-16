@@ -24,7 +24,7 @@ comment.onDirect(async message => {
 
 ### Table of Contents ###
 
-[comment](#io)
+#### [comment](#io)
   - [count](#io)
   - [create](#io)
   - [delete](#io)
@@ -33,11 +33,11 @@ comment.onDirect(async message => {
   - [on-echo](#io)
   - [on-mention](#io)
   - [read](#io)
-[contact](#contact)
+#### [contact](#contact)
   - [create](#contact-create)
   - [get-locale](#contact-get-locale)
   - [read](#contact-read)
-[file](#file)
+#### [file](#file)
   - [getGETUrl](#getGETUrl)
   - [getPUTUrl](#getPUTUrl)
 [mail](#mail)
