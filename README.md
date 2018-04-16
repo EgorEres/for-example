@@ -1,43 +1,24 @@
 ## workonflow-bot-client ##
 
 ### How to use ###
+```js
+const botClient = require('bot-client')
 
-    const botClient = require('bot-client')
+const creds = {
+  email: <you email>,
+  password: <you password>
+}
 
-    // только что созданные вами авторизационные данные
-    const creds = {
-      email: <ваш имейл>,
-      password: <ваш пароль>
-    }
+const { comment } = botClient.connect(creds)
 
-    const { comment } = botClient.connect(creds)
-    comment.onMention(async message => {
-      //когда кто-то обратится к вам в стриме или треде через @
-      // будет работать этот коллбек
+comment.onDirect(async message => {
+  console.log('ON_DIRECT', message)
+  const { teamId } = message
+  const to = message.data.content.from
 
-      console.log('ON_MENTION', message)
-      const { teamId } = message
-      const { streamId } = message.data.content
-      const { threadId } = message.data.content
+  const att = [{ type: 'text', data: { text: "text for response" } }]
+  const resp = await comment.create(teamId, { to, att })
+  console.log('resp', resp)
+})
+```
 
-      // код отправить в ответ сообщение "привет" 
-      const text = 'привет'
-      const att = [{ type: 'text', data: { text } }]
-      const resp = await comment.create(teamId, { att, streamId, threadId })
-      console.log('resp', resp)
-    })
-
-    comment.onDirect(async message => {
-      // когда кто-то напишет вам личное сообщение 
-      // будет работать этот коллбек
-
-      console.log('ON_DIRECT', message)
-      const { teamId } = message
-      const to = message.data.content.from
-      
-      // код чтобы отправить в ответ сообщение привет
-      const text = "привет"
-      const att = [{ type: 'text', data: { text } }]
-      const resp = await comment.create(teamId, { to, att })
-      console.log('resp', resp)
-    })
