@@ -1,8 +1,12 @@
 ## workonflow-bot-client ##
 
+```js
+npm install workonflow-bot-client
+```
+
 ### How to use ###
 ```js
-const botClient = require('bot-client')
+const botClient = require('workonflow-bot-client')
 
 const creds = {
   email: <you email>,
