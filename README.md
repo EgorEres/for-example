@@ -28,6 +28,12 @@ comment.onDirect(async message => {
 
 ### Table of Contents ###
 
+| #### [comment](#io) |   |   |   |   |
+|---|---|---|---|---|
+| [count](#io) |   |   |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
+
 #### [comment](#io)
   - [count](#io)
   - [create](#io)
