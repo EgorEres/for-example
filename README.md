@@ -1,7 +1,7 @@
 ## workonflow-bot-client ##
 
 ```js
-npm install workonflow-bot-client
+$ npm install workonflow-bot-client
 
 const botConnect = require('workonflow-bot-client').connect
 
@@ -70,6 +70,8 @@ const { comment } = botClient
 
 ```js
 const { comment } = botClient
+const query = { threadId }
 const count = await comment.count(teamId, query)
 console.log(count)
 ```
+где query может принимать один из атрибутов: threadId, threadIds, streamId, includeActions
