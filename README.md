@@ -29,7 +29,7 @@ comment.onDirect(async message => {
 ### Table of Contents ###
 
 | [comment](#io)    | [contact](#contact)               | [file](#file)           | [mail](#mail)                      | [status](#status)           | [stream](#stream)                          |[team](#team)                                           |[telephony](#telephony)              |[thread](#thread)                                 |
-|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|---|
 | [count](#io)      | [create](#contact-create)         | [getGETUrl](#getGETUrl) | [get-accounts](#mail-get-accounts) | [create](#status-create)    | [create](#stream-create)                   |[get-accesses](#team-get-accesses)                      |[create-user](#telephony-create-user)|[create](#thread-create)                          |
 | [create](#io)     | [get-locale](#contact-get-locale) | [getPUTUrl](#getPUTUrl) | [on-received](#mail-on-received)   | [read](#status-read)        | [delete-user](#stream-delete-user)         |[invite-user](#team-invite-user)                        |[delete-user](#telephony-delete-user)|[on-budget-updated](#thread-on-budget-updated)    |
 | [delete](#io)     | [read](#contact-read)             |                         | [on-sent](#mail-on-sent)           | [set-name](#status-set-name)| [delete](#stream-delete)                   |[on-admin-status-given](#team-on-admin-status-given)    |[get-user](#telephony-get-user)      |[on-created](#thread-on-created)                  |
