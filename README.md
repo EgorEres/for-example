@@ -2,19 +2,23 @@
 
 ```js
 npm install workonflow-bot-client
-```
 
-### How to use ###
-
-```js
-const botClient = require('workonflow-bot-client')
+const botConnect = require('workonflow-bot-client').connect
 
 const creds = {
   email: <you email>,
   password: <you password>
 }
 
-const { comment } = botClient.connect(creds)
+const botClient = botConnect(creds)
+```
+
+### How to use ###
+
+```js
+const botClient = botConnect(creds)
+
+const { comment } = botClient
 
 comment.onDirect(async message => {
   console.log('ON_DIRECT', message)
@@ -29,7 +33,7 @@ comment.onDirect(async message => {
 
 |[comment](#comment)              |[contact](#contact)              |[status](#status)           |[stream](#stream)                         |[team](#team)                                           |[thread](#thread)                                 |
 |---|---|---|---|---|---|
-|[count](#comment.conunt)         |[create](#contact-create)        |[create](#status-create)    |[create](#stream-create)                  |[get-accesses](#team-get-accesses)                      |[create](#thread-create)                          |
+|[count](#comment-conunt)         |[create](#contact-create)        |[create](#status-create)    |[create](#stream-create)                  |[get-accesses](#team-get-accesses)                      |[create](#thread-create)                          |
 |[create](#comment-create)        |[get-locale](#contact-get-locale)|[read](#status-read)        |[delete-user](#stream-delete-user)        |[invite-user](#team-invite-user)                        |[on-budget-updated](#thread-on-budget-updated)    |
 |[delete](#comment-delete)        |[read](#contact-read)            |[set-name](#status-set-name)|[delete](#stream-delete)                  |[on-admin-status-given](#team-on-admin-status-given)    |[on-created](#thread-on-created)                  |
 |[on-created](#comment-on-created)|                                 |                            |[on-user-deleted](#stream-on-user-deleted)|[on-admin-status-revoked](#team-on-admin-status-revoked)|[on-deadline-updated](#thread-on-deadline-updated)|
@@ -56,4 +60,16 @@ comment.onDirect(async message => {
 
 ### comment
 
-  #### comment.count
+```js
+const botClient = botConnect(creds)
+const { comment } = botClient
+```
+#### count
+
+Метод для получения колличества комментариев.
+
+```js
+const { comment } = botClient
+const count = await comment.count(teamId, query)
+console.log(count)
+```
