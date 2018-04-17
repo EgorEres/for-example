@@ -55,3 +55,5 @@ comment.onDirect(async message => {
 
 
 ### comment
+
+  #### comment.count
