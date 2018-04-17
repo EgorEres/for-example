@@ -64,7 +64,7 @@ comment.onDirect(async message => {
 const botClient = botConnect(creds)
 const { comment } = botClient
 ```
-#### <span id="comment-count">count</span>
+<span id="comment-count">count</span>
 
 Метод для получения колличества комментариев.
 
