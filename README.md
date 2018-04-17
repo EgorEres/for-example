@@ -28,7 +28,7 @@ comment.onDirect(async message => {
 
 ### Table of Contents ###
 
-| [comment](#io)    | [contact](#contact)               |[status](#status)           | [stream](#stream)                          |[team](#team)                                           |<td colspan=2>[thread](#thread)                   |
+| [comment](#io)    | [contact](#contact)               |[status](#status)           | [stream](#stream)                          |[team](#team)                                           |<th colspan=2>[thread](#thread)                   ||
 |---|---|---|---|---|---|---|
 | [count](#io)      | [create](#contact-create)         |[create](#status-create)    | [create](#stream-create)                   |[get-accesses](#team-get-accesses)                      |[create](#thread-create)                          ||
 | [create](#io)     | [get-locale](#contact-get-locale) |[read](#status-read)        | [delete-user](#stream-delete-user)         |[invite-user](#team-invite-user)                        |[on-budget-updated](#thread-on-budget-updated)    ||
