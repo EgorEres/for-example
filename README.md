@@ -53,3 +53,11 @@ comment.onDirect(async message => {
 |                         |[on-sent](#mail-on-sent)           |[get-user](#telephony-get-user)      |
 |                         |[read](#mail-read)                 |[update-user](#telephony-update-user)|
 |                         |[send](#mail-send)                 |                                     |
+
+
+|: Logical Operators :| <--------------
+|:---:| --- |
+| `&&` | Logical and |
+| `\|\|` | Logical or |
+| `!` | Logical not |
+| `? :` | Logical ternary |
