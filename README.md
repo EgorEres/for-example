@@ -65,7 +65,7 @@ const botClient = botConnect(creds)
 const { comment } = botClient
 ```
 #### count
-{: id="comment-conut"}
+{#comment-conut}
 
 Метод для получения колличества комментариев.
 
