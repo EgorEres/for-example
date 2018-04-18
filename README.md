@@ -82,12 +82,8 @@ console.log(response) // { code: 200, message: 'OK', count: 1 }
 - **includeActions** - TODO
 > в ответе поле **count** - кол-во комментариев
 
-<div style="border:1px,solid;">  </div>
-<div style="border:1px,solid;">  s</div>
-<div style="border:1px,solid;">
+[](http://www.allgearinc.com/img/arborist%20rigging/AGBRS12linethumb.png "")
 
-
-</div>
 
 #### <a name="user-content-comment-create">create</a>
 
