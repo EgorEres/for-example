@@ -51,13 +51,13 @@ comment.onDirect(async message => {
 
 | [file](#file)           |[mail](#mail)                      |[telephony](#telephony)              |
 |---|---|---|
-| [getGETUrl](#getGETUrl) |[get-accounts](#mail-get-accounts) |[create-user](#telephony-create-user)|
-| [getPUTUrl](#getPUTUrl) |[on-received](#mail-on-received)   |[delete-user](#telephony-delete-user)|
-|                         |[on-sent](#mail-on-sent)           |[get-user](#telephony-get-user)      |
-|                         |[read](#mail-read)                 |[update-user](#telephony-update-user)|
-|                         |[send](#mail-send)                 |                                     |
+| [getGETUrl](#getGETUrl) |[getAccounts](#user-content-mail-get-accounts)|[create-user](#telephony-create-user)|
+| [getPUTUrl](#getPUTUrl) |[onReceived](#user-content-mail-on-received)  |[delete-user](#telephony-delete-user)|
+|                         |[onSent](#user-content-mail-on-sent)          |[get-user](#telephony-get-user)      |
+|                         |[read](#user-content-mail-read)               |[update-user](#telephony-update-user)|
+|                         |[send](#user-content-mail-send)               |                                     |
 
-
+----------
 ### comment
 
 ```js
@@ -74,9 +74,10 @@ const query = { threadId }
 const count = await comment.count(teamId, query)
 console.log(count)
 ```
-[Example response](./sorta-docs/count.md)
+#### [Example response](./sorta-docs/count.md)
 
 где query может принимать один из атрибутов: threadId, threadIds, streamId, includeActions
+
 
 #### <a name="user-content-comment-create">create</a>
 #### <a name="user-content-comment-delete">delete</a>
@@ -86,6 +87,7 @@ console.log(count)
 #### <a name="user-content-comment-on-mention">onMention</a>
 #### <a name="user-content-comment-read">read</a>
 
+-------------
 
 ### contact
 
@@ -155,12 +157,26 @@ console.log(count)
 
 ### file
 
+#### getGETUrl
+#### getPUTUrl
+
 ---------
 
 
 ### mail
 
+#### <a name="user-content-mail-get-accounts">getAccounts</a>
+#### <a name="user-content-mail-on-received">onReceived</a>
+#### <a name="user-content-mail-on-sent">onSent</a>
+#### <a name="user-content-mail-read">read</a>
+#### <a name="user-content-mail-send">send</a>
+
 ---------
 
 
 ### telephony
+
+#### <a name="user-content-telephony-create-user">createUser</a>
+#### <a name="user-content-telephony-delete-user">deleteUser</a>
+#### <a name="user-content-telephony-get-user">getUser</a>
+#### <a name="user-content-telephony-update-user">updateUser</a>
