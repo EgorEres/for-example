@@ -75,10 +75,37 @@ const response = await comment.count(teamId, query)
 console.log(response) // { code: 200, message: 'OK', count: 1 }
 ```
 
-где query может принимать один из атрибутов: threadId, threadIds, streamId, includeActions
-
+где query может принимать один из атрибутов:
+- **threadId** - id задачи;
+- **threadIds** - массив из нескольких id задач;
+- **streamId** - id потока;
+- **includeActions** - TODO
+> в ответе поле **count** - кол-во комментариев
 
 #### <a name="user-content-comment-create">create</a>
+
+Метод для создания комментариев
+
+```js
+const { comment } = botClient
+const query = { streamId, threadId, metadata, att, to: Array.isArray(to) ? to : [ to ] }
+const response = await comment.create(teamId, query)
+console.log(response) // { code: 200, message: 'OK', data: '5ad6f9be219171001f64dc0f' }
+```
+
+где query может принимать атрибуты:
+- **streamId** - id потока (для публикации комментария в общем чате потока);
+- **threadId** - id задачи (для публикации комментария в задаче);
+- **metadata** - TODO;
+- **to** - id пользователя в системе, может также принимать массив id пользователей (если указать только поле **to** то комментарий будет опубликован в *личных* сообщениях);
+- **att** - имеет вид типа:
+```js
+[type: 'text' data: { text: 'string' }]
+```
+
+
+> в ответе поле **data** - id комментария
+
 #### <a name="user-content-comment-delete">delete</a>
 #### <a name="user-content-comment-on-created">onCreated</a>
 #### <a name="user-content-comment-on-direct">onDirect</a>
