@@ -35,12 +35,12 @@ comment.onDirect(async message => {
 |---|---|---|---|---|---|
 |[count](#user-content-comment-conunt)         |[create](#user-content-contact-create)        |[create](#user-content-status-create)    |[create](#user-content-stream-create)                |[getAccesses](#user-content-team-get-accesses)                    |[create](#user-content-thread-create)                          |
 |[create](#user-content-comment-create)        |[getLocale](#user-content-contact-get-locale) |[read](#user-content-status-read)        |[deleteUser](#user-content-stream-delete-user)       |[inviteUser](#user-content-team-invite-user)                      |[onBudgetUpdated](#user-content-thread-on-budget-updated)    |
-|[delete](#user-content-comment-delete)        |[read](#user-content-contact-read)            |[setName](#user-content-status-set-name) |[delete](#user-content-stream-delete)                |[onAdminStatusGiven](#user-content-team-on-admin-status-given)    |[onCreated](#user-content-thread-on-created)                  |
-|[onCreated](#user-content-comment-on-created) |                                              |                                         |[onUserDeleted](#user-content-stream-on-user-deleted)|[onAdminStatusRevoked](#user-content-team-on-admin-status-revoked)|[onDeadlineUpdated](#user-content-thread-on-deadline-updated)|
-|[onDirect](#user-content-comment-on-direct)   |                                              |                                         |[onUserSet](#user-content-stream-on-user-set)        |[onUserInvited](#user-content-team-on-user-invited)               |[statusUpdated](#user-content-thread-status-updated)          |
-|[onEcho](#user-content-comment-on-echo)       |                                              |                                         |[read](#user-content-stream-read)                    |[onUserRemoved](#user-content-team-on-user-removed)               |[readDescription](#user-content-thread-read-description)      |
-|[onMention](#user-content-comment-on-mention) |                                              |                                         |[setAdmin](#user-content-stream-set-admin)           |[read](#user-content-team-read)                                   |[read](#user-content-thread-read)                              |
-|[read](#user-content-comment-read)            |                                              |                                         |[setName](#user-content-stream-set-name)             |                                                                  |[setBudget](#user-content-thread-set-budget)                  |
+|[onCreated](#user-content-comment-on-created) |[read](#user-content-contact-read)            |[setName](#user-content-status-set-name) |[delete](#user-content-stream-delete)                |[onAdminStatusGiven](#user-content-team-on-admin-status-given)    |[onCreated](#user-content-thread-on-created)                  |
+|[onDirect](#user-content-comment-on-direct)   |                                              |                                         |[onUserDeleted](#user-content-stream-on-user-deleted)|[onAdminStatusRevoked](#user-content-team-on-admin-status-revoked)|[onDeadlineUpdated](#user-content-thread-on-deadline-updated)|
+|[onEcho](#user-content-comment-on-echo)       |                                              |                                         |[onUserSet](#user-content-stream-on-user-set)        |[onUserInvited](#user-content-team-on-user-invited)               |[statusUpdated](#user-content-thread-status-updated)          |
+|[onMention](#user-content-comment-on-mention) |                                              |                                         |[read](#user-content-stream-read)                    |[onUserRemoved](#user-content-team-on-user-removed)               |[readDescription](#user-content-thread-read-description)      |
+|[read](#user-content-comment-read)            |                                              |                                         |[setAdmin](#user-content-stream-set-admin)           |[read](#user-content-team-read)                                   |[read](#user-content-thread-read)                              |
+|                                              |                                              |                                         |[setName](#user-content-stream-set-name)             |                                                                  |[setBudget](#user-content-thread-set-budget)                  |
 |                                              |                                              |                                         |[setUser](#user-content-stream-set-user)             |                                                                  |[setDeadline](#user-content-thread-set-deadline)              |
 |                                              |                                              |                                         |                                                     |                                                                  |[setDescription](#user-content-thread-set-description)        |
 |                                              |                                              |                                         |                                                     |                                                                  |[setPriority](#user-content-thread-set-priority)              |
@@ -79,8 +79,10 @@ console.log(response) // { code: 200, message: 'OK', count: 1 }
 - **threadId** - id задачи;
 - **threadIds** - массив из нескольких id задач;
 - **streamId** - id потока;
-- **includeActions** - TODO
+- **includeActions** - in developing
 > в ответе поле **count** - кол-во комментариев
+
+<div style="border:1px,solid;"></div>
 
 #### <a name="user-content-comment-create">create</a>
 
@@ -88,27 +90,23 @@ console.log(response) // { code: 200, message: 'OK', count: 1 }
 
 ```js
 const { comment } = botClient
-const query = { streamId, threadId, metadata, att, to: Array.isArray(to) ? to : [ to ] }
+const query = { threadId }
 const response = await comment.create(teamId, query)
 console.log(response) // { code: 200, message: 'OK', data: '5ad6f9be219171001f64dc0f' }
 ```
 
-где query может принимать атрибуты:
+где query может принимать параметры:
 - **streamId** - id потока (для публикации комментария в общем чате потока);
 - **threadId** - id задачи (для публикации комментария в задаче);
-- **metadata** - TODO;
+- **metadata** - in developing;
 - **to** - id пользователя в системе, может также принимать массив id пользователей (если указать только поле **to** то комментарий будет опубликован в *личных* сообщениях);
-- **att** - имеет вид типа:
-```js
-[type: 'text' data: { text: 'string' }]
-```
-
+- **att** - имеет вид типа: [{ type: 'text' data: { text: 'string' } }]
+-- **type** - тим сообщения может быть *text*, *file*.
+-- **data** - объект с текстом либо id файла
 
 > в ответе поле **data** - id комментария
 
-#### <a name="user-content-comment-delete">delete</a>
 #### <a name="user-content-comment-on-created">onCreated</a>
-
 
 Метод который отлавливает созданные коментарии
 принимает в себя функцию обратного выхова (call back function)
@@ -120,12 +118,60 @@ const cb = message => {
 }
 await comment.onCreated(cb)
 ```
-> Example message look [hire](./sorta-docs/onCreated-message.md)
+> Example message look [here](./sorta-docs/onCreated-message.md)
 
 #### <a name="user-content-comment-on-direct">onDirect</a>
+
+Метод который отлавливает создание комментария в личные сообщения боту
+принимает в себя функцию обратного выхова (call back function)
+
+```js
+const { comment } = botClient
+const cb = message => {
+  console.log(message)
+}
+await comment.onDirect(cb)
+```
+
+> Example message look [here](./sorta-docs/onDirect-message.md)
+
 #### <a name="user-content-comment-on-echo">onEcho</a>
+in developing
 #### <a name="user-content-comment-on-mention">onMention</a>
+
+Метод который отлавливает создание комментария с упоминанием бота
+принимает в себя функцию обратного выхова (call back function)
+
+```js
+const { comment } = botClient
+const cb = message => {
+  console.log(message)
+}
+await comment.onMention({keepBotRef: true}, cb)
+```
+Метод вырезает упоминание бота в сообщении,
+если указать параметр { keepBotRef: true } то метод вернет полное сообщение с упоминанием бота
+
+> Example message look [here](./sorta-docs/onMention-message.md)
+
 #### <a name="user-content-comment-read">read</a>
+
+Метод для получения комментариев
+
+```js
+const { comment } = botClient
+const query = { id }
+const response = await comment.read(teamId, query)
+console.log(response) // { code: 200, message: 'OK', data: '5ad6f9be219171001f64dc0f' }
+```
+где query может принимать параметры:
+- **id** - id комментария (вернёт коментарий);
+- **streamId** - id потока (вернёт последнии 100 коментариев потока);
+- **threadId** - id задачи (вернёт последнии 100 коментариев задачи);
+- **skip** - дополнительный параметр, число - кол-ва комментариев которые необходимо пропустить;
+- **type** - дополнительный параметр, тип коментария
+
+> Example responses look [here](./sorta-docs/comment-read-response.md)
 
 -------------
 

@@ -21,7 +21,6 @@
   }
 }
 ```
-----------
 
 #### if comment create in thread
 
