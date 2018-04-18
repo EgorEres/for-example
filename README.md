@@ -74,6 +74,8 @@ const query = { threadId }
 const count = await comment.count(teamId, query)
 console.log(count)
 ```
+[Example response](./sorta-docs/count.md)
+
 где query может принимать один из атрибутов: threadId, threadIds, streamId, includeActions
 
 #### <a name="user-content-comment-create">create</a>
