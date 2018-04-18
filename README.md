@@ -82,9 +82,6 @@ console.log(response) // { code: 200, message: 'OK', count: 1 }
 - **includeActions** - TODO
 > в ответе поле **count** - кол-во комментариев
 
-![line](http://www.allgearinc.com/img/arborist%20rigging/AGBRS12linethumb.png "")
-
-
 #### <a name="user-content-comment-create">create</a>
 
 Метод для создания комментариев
