@@ -108,6 +108,19 @@ console.log(response) // { code: 200, message: 'OK', data: '5ad6f9be219171001f64
 
 #### <a name="user-content-comment-delete">delete</a>
 #### <a name="user-content-comment-on-created">onCreated</a>
+
+
+Метод который отлавливает созданные коментарии
+принимает в себя функцию обратного выхова (call back function)
+
+```js
+const { comment } = botClient
+const cb = message => {
+  console.log(message) // Example message look [hire](./sorta-dock/onCreated-message)
+}
+await comment.onCreated(cb)
+```
+
 #### <a name="user-content-comment-on-direct">onDirect</a>
 #### <a name="user-content-comment-on-echo">onEcho</a>
 #### <a name="user-content-comment-on-mention">onMention</a>
