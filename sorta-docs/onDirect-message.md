@@ -1,4 +1,4 @@
-## Example massage
+## Пример сообщения
 
 ```js
 { teamId: 'some team id',

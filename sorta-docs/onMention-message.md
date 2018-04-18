@@ -1,6 +1,6 @@
-## Example massage
+## Пример сообщения
 
-#### if method call with keepBotRef parameter
+#### если метод вызван с keepBotRef параметром
 
 - in stream
 
@@ -44,7 +44,7 @@
 }
 ```
 
-#### if method call without keepBotRef parameter
+#### если метод вызван без keepBotRef параметром
 
 - in stream
 
@@ -58,7 +58,7 @@
       updatedAt: 1524043332761,
       to: [ 'bot id' ],
       from: 'user id',
-      att:  [ { type: 'text', data: { text: '@botId@ some text' } } ],
+      att:  [ { type: 'text', data: { text: 'some text' } } ],
       streamId: 'some stream id',      
       _id: 'comment id',
     }
@@ -79,7 +79,7 @@
       updatedAt: 1524043332761,
       to: [ 'bot id' ],
       from: 'user id',
-      att:  [ { type: 'text', data: { text: '@botId@ some text' } } ],
+      att:  [ { type: 'text', data: { text: 'some text' } } ],
       streamId: 'some stream id',
       threadId: 'some thread id',
       _id: 'comment id',

@@ -1,6 +1,6 @@
-## Example massage
+## Пример сообщения
 
-#### if comment create in stream
+#### если комментарий создали в потоке
 
 ```js
 { teamId: 'some team id',
@@ -22,7 +22,7 @@
 }
 ```
 
-#### if comment create in thread
+#### если комментарий создали в задаче
 
 ```js
 { teamId: 'some team id',
@@ -46,7 +46,7 @@
 }
 ```
 
-#### and others comment create
+#### в остальных случаях
 ```js
 { teamId: 'some team id',
   data: {
