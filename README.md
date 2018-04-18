@@ -82,7 +82,12 @@ console.log(response) // { code: 200, message: 'OK', count: 1 }
 - **includeActions** - TODO
 > в ответе поле **count** - кол-во комментариев
 
-<div style="border:1px,solid;"></div>
+<div style="border:1px,solid;">  </div>
+<div style="border:1px,solid;">  s</div>
+<div style="border:1px,solid;">
+
+
+</div>
 
 #### <a name="user-content-comment-create">create</a>
 
