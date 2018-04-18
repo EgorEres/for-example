@@ -120,7 +120,7 @@ const cb = message => {
 }
 await comment.onCreated(cb)
 ```
-> Example message look [hire](./sorta-dock/onCreated-message.md)
+> Example message look [hire](./sorta-docs/onCreated-message.md)
 
 #### <a name="user-content-comment-on-direct">onDirect</a>
 #### <a name="user-content-comment-on-echo">onEcho</a>
