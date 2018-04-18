@@ -71,10 +71,9 @@ const { comment } = botClient
 ```js
 const { comment } = botClient
 const query = { threadId }
-const count = await comment.count(teamId, query)
-console.log(count)
+const response = await comment.count(teamId, query)
+console.log(response) // { code: 200, message: 'OK', count: 1 }
 ```
-##### [Example response](./sorta-docs/count.md)
 
 где query может принимать один из атрибутов: threadId, threadIds, streamId, includeActions
 
