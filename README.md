@@ -8,17 +8,17 @@ $ npm install workonflow-bot-client
 const botConnect = require('workonflow-bot-client').connect
 
 const creds = {
-  email: <you email>,
-  password: <you password>
+  email: "you email",
+  password: "you password"
 }
 
-const botClient = botConnect(creds)
+const botClient = await botConnect(creds)
 ```
 
 ### Как использовать ###
 
 ```js
-const botClient = botConnect(creds)
+const botClient = await botConnect(creds)
 
 const { comment } = botClient
 
@@ -65,7 +65,7 @@ comment.onDirect(async message => {
 #### Методы работы с комментариями
 
 ```js
-const botClient = botConnect(creds)
+const botClient = await botConnect(creds)
 const { comment } = botClient
 ```
 #### <a name="user-content-comment-conunt">comment.count</a>
@@ -83,7 +83,6 @@ console.log(response) // { code: 200, message: 'OK', count: 1 }
 - **threadId** - id задачи;
 - **threadIds** - массив из нескольких id задач;
 - **streamId** - id потока;
-- **includeActions** - in developing
 > в ответе поле **count** - кол-во комментариев
 
 <div style="border:1px,solid;"></div>
@@ -102,7 +101,6 @@ console.log(response) // { code: 200, message: 'OK', data: '5ad6f9be219171001f64
 где query может принимать параметры:
 - **streamId** - id потока (для публикации комментария в общем чате потока);
 - **threadId** - id задачи (для публикации комментария в задаче);
-- **metadata** - in developing;
 - **to** - id пользователя в системе, может также принимать массив id пользователей (если указать только поле **to** то комментарий будет опубликован в *личных* сообщениях);
 - **att** - имеет вид типа: [{ type: 'text' data: { text: 'string' } }]
 -- **type** - тим сообщения может быть *text*, *file*.
@@ -139,9 +137,9 @@ await comment.onDirect(cb)
 
 > Пример сообщения смотри [тут](./sorta-docs/onDirect-message.md)
 
-#### <a name="user-content-comment-on-echo">onEcho</a>
+#### <a name="user-content-comment-on-echo">comment.onEcho</a>
 in developing
-#### <a name="user-content-comment-on-mention">onMention</a>
+#### <a name="user-content-comment-on-mention">comment.onMention</a>
 
 Метод который отлавливает создание комментария с упоминанием бота
 принимает в себя функцию обратного выхова (callback function)
@@ -158,7 +156,7 @@ await comment.onMention({keepBotRef: true}, cb)
 
 > Пример сообщения смотри [тут](./sorta-docs/onMention-message.md)
 
-#### <a name="user-content-comment-read">read</a>
+#### <a name="user-content-comment-read">comment.read</a>
 
 Метод для получения комментариев
 
@@ -181,17 +179,144 @@ console.log(response) // { code: 200, message: 'OK', data: '5ad6f9be219171001f64
 
 ### contact
 
-#### <a name="user-content-contact-create">create</a>
-#### <a name="user-content-contact-get-locale">getLocale</a>
-#### <a name="user-content-contact-read">read</a>
+#### Методы работы с контактами и пользователями
+
+```js
+const botClient = await botConnect(creds)
+const { contact } = botClient
+```
+#### <a name="user-content-contact-create">contact.create</a>
+
+Метод для создания контакта
+
+```js
+const { contact } = botClient
+const query = {
+  basicData: {name: "new name customer"}
+  customFields: [
+    {id: "B1R5NTS3z", label: "Company", value: "", type: "company"},
+    {id: "B1l094TB2M", label: "Work phone", value: "", type: "phone"},
+    {id: "rkbA9VTH3M", label: "Work e-mail", value: "", type: "email"}
+  ]
+}
+const response = await contact.create(teamId, query)
+console.log(response)
+```
+где query должен принимать параметры:
+- **basicData** - принимает объект с именем контакта;
+- **customFields** - поля для добавление каналов с контактом
+
+> Пример ответа
+```js
+{
+  code: 200,
+  message: 'OK',
+  data: { insertedCount: 1, insertedId: 'new contact id' }
+}
+```
+где insertedId - id созданного контакта
+
+#### <a name="user-content-contact-get-locale">contact.getLocale</a>
+
+Метод для получения "языка" пользователя
+
+```js
+const { contact } = botClient
+const query = { id: 'user id' }
+const response = await contact.getLocale(teamId, query)
+console.log(response)
+```
+
+> Пример ответа
+```js
+{ code: 200, message: 'OK', data: { locale: 'en' } }
+```
+
+#### <a name="user-content-contact-read">contact.read</a>
+
+Метод для получения пользоватей
+
+```js
+const { contact } = botClient
+const query = { id: 'user id' }
+const response = await contact.read(teamId, query)
+console.log(response)
+```
+где query может быть:
+- **id** - id контакта или пользователя;
+- **ids** - несколько id контактов или пользователей
+
+> Пример ответа смотри [тут](./sorta-docs/contact-read-response.md)
+
 ------------
 
 
 ### status
 
-#### <a name="user-content-status-create">create</a>
-#### <a name="user-content-status-read">read</a>
-#### <a name="user-content-status-set-name">setName</a>
+#### Методы работы со статусами потока
+
+```js
+const botClient = await botConnect(creds)
+const { status } = botClient
+```
+#### <a name="user-content-status-create">status.create</a>
+
+Метод для создания статуса потока
+
+```js
+const { status } = botClient
+const query = {
+  name: 'new status name',
+  streamId: 'id stream',
+  type: 'Done',
+  color: 'randomColor()'
+}
+const response = await status.create(teamId, query)
+console.log(response)
+```
+
+где query принимает следующие параметры:
+- **color** - цвет статуса (для этого обычно используем библиотеку randomColor(), либо любой цвет формата - #c0c0c0);
+- **name**- название статуса
+- **streamId** - id потока в который создаём статус
+- **type** - один из глобальных статусов *Wait*, *In progress*, *Done*
+
+> Пример ответа
+```js
+{code: 200, message: "Ok", data: "id new status"}
+```
+
+#### <a name="user-content-status-read">status.read</a>
+
+Метод для получения статуса
+
+```js
+const { status } = botClient
+const query = { id: statusId }
+const response = await status.read(teamId, query)
+console.log(response)
+```
+где query может принимать параметры:
+- **id** - id статуса;
+- **streamId** - id потока, для получения всех статусов в потоке
+
+> Пример ответа смотри [тут](./sorta-docs/status-read-response.md)
+
+#### <a name="user-content-status-set-name">status.setName</a>
+
+Метод для изменения имени статуса
+
+```js
+const { status } = botClient
+const query = { id: statusId, name: 'new status name' }
+const response = await status.setName(teamId, query)
+console.log(response)
+```
+где query может принимать параметры:
+- **id** - id статуса;
+- **name** - новое имя для статуса
+
+> Пример ответа смотри [тут](./sorta-docs/status-set-name-response.md)
 
 -----------
 
@@ -201,13 +326,53 @@ console.log(response) // { code: 200, message: 'OK', data: '5ad6f9be219171001f64
 #### Методы работы с потоками
 
 ```js
-const botClient = botConnect(creds)
+const botClient = await botConnect(creds)
 const { stream } = botClient
 ```
 
 #### <a name="user-content-stream-create">stream.create</a>
+
+Метод для создания потока
+
+```js
+const { stream } = botClient
+const query = {
+  name: 'new stream name',
+  isEmpty: true
+}
+const response = await stream.create(teamId, query)
+console.log(response)
+```
+
+где query принимает следующие параметры:
+- **name**- название потока
+- **isEmpty** - по умолчанию поток создаётся с 3мя статусами, если указать данный параметр будет создан пустой поток
+- **settings** - подробнен про данный параметр смотри [тут](./sorta-docs/stream-create-settings.md)
+
+> Пример ответа
+```js
+{code: 200, message: "Ok", data: "id new stream"}
+```
+
+name, settings, isEmpty
 #### <a name="user-content-stream-delete-user">stream.deleteUser</a>
+
+Метод для удаления участника из потока
+
+```js
+const { stream } = botClient
+const query = { id: 'stream id', user: 'user id' }
+const response = await stream.deleteUser(teamId, query)
+console.log(response)
+```
+где query должен принимать параметры:
+- **id** - id статуса;
+- **user** - id пользователя которога надо удалить из участников потока
+
+> Пример ответа {code: 200, message: "OK"}
+
 #### <a name="user-content-stream-delete">stream.delete</a>
+in developing
 #### <a name="user-content-stream-on-user-deleted">stream.onUserDeleted</a>
 
 Метод который отлавливает удаление пользователя из потока
@@ -220,7 +385,7 @@ const cb = message => {
 await stream.onUserDeleted({self: true}, cb)
 ```
 
-Параметр {self: true} отлавливает сообщения о удалении из потока только бота если указать false будут поступать сообщения об удалении любого пользователя
+Параметр {self: true} отлавливает сообщения о удалении из потока только бота если указать false будут поступать сообщения о удалении любого пользователя
 
 > Пример сообщения смотри [тут](./sorta-docs/onUserDeleted-message.md)
 
@@ -258,21 +423,107 @@ console.log(response)
 > Пример ответа смотри [тут](./sorta-docs/stream-read-response.md)
 
 #### <a name="user-content-stream-set-admin">stream.setAdmin</a>
+in developing
 #### <a name="user-content-stream-set-name">stream.setName</a>
+
+Метод для изменении имени потока
+
+```js
+const { stream } = botClient
+const query = { id: 'stream id', name: 'new stream name' }
+const response = await stream.setName(teamId, query)
+console.log(response)
+```
+где query должен принимать параметры:
+- **id** - id статуса;
+- **name** - новое имя потока
+
+> Пример ответа {code: 200, message: "OK"}
+
 #### <a name="user-content-stream-set-user">stream.setUser</a>
+
+Метод для добавления участника в поток
+
+```js
+const { stream } = botClient
+const query = { id: 'stream id', user: 'user id' }
+const response = await stream.setUser(teamId, query)
+console.log(response)
+```
+где query должен принимать параметры:
+- **id** - id статуса;
+- **user** - id пользователя которого надо добавить в участники потока
+
+> Пример ответа {code: 200, message: "OK"}
 
 ----------
 
 
 ### team
 
-#### <a name="user-content-team-get-accesses">getAccesses</a>
-#### <a name="user-content-team-invite-user">inviteUser</a>
-#### <a name="user-content-team-on-admin-status-given">onAdminStatusGiven</a>
-#### <a name="user-content-team-on-admin-status-revoked">onAdminStatusRevoked</a>
-#### <a name="user-content-team-on-user-invited">onUserInvited</a>
+#### <a name="user-content-team-invite-user">team.inviteUser</a>
+in developing
+#### <a name="user-content-team-on-admin-status-given">team.onAdminStatusGiven</a>
+in developing
+#### <a name="user-content-team-on-admin-status-revoked">team.onAdminStatusRevoked</a>
+in developing
+#### <a name="user-content-team-on-user-invited">team.onUserInvited</a>
+
+Метод который отлавливает добавление пользователя в тиму
+
+```js
+const { team } = botClient
+const cb = message => {
+  console.log(message)
+}
+team.onUserInvited({ self: true }, cb)
+```
+
+Параметр {self: true} отлавливает сообщения о добавлении в тиму только бота если указать false или не указывать этот параметр будут поступать сообщения о добавлении любого пользователя
+
+> Пример сообщения
+```js
+{ teamId: 'team id',
+  data: {
+    userId: 'user id',
+    email: 'user email'
+  }
+}
+```
+
 #### <a name="user-content-team-on-user-removed">onUserRemoved</a>
+
+Метод который отлавливает удаление пользователя из тимы
+
+```js
+const { team } = botClient
+const cb = message => {
+  console.log(message)
+}
+team.onUserRemoved({ self: true }, cb)
+```
+
+Параметр {self: true} отлавливает сообщения о удалении из тимы только бота если указать false или не указывать этот параметр будут поступать сообщения о удалении любого пользователя
+
+> Пример сообщения
+```js
+{ teamId: 'team id',
+  data: { userId: 'user id' }
+}
+```
 #### <a name="user-content-team-read">read</a>
+
+Метод для получения тимы
+
+> Информация будет доступна только по тем тимам в которых бот приглашён
+
+```js
+const { team } = botClient
+const response = await team.read(teamId)
+console.log(response)
+```
+
+> Пример ответа
 
 ----------
 
@@ -304,6 +555,7 @@ console.log(response)
 ```
 
 #### <a name="user-content-thread-on-budget-updated">thread.onBudgetUpdated</a>
+in developing
 #### <a name="user-content-thread-on-created">thread.onCreated</a>
 
 Метод который отлавливает создание задачи
@@ -319,6 +571,7 @@ await thread.onCreated(cb)
 > Пример сообщения смотри [тут](./sorta-docs/thread-onCreated-message.md)
 
 #### <a name="user-content-thread-on-deadline-updated">thread.onDeadlineUpdated</a>
+in developing
 #### <a name="user-content-thread-status-updated">thread.onStatusUpdated</a>
 
 Метод который отлавливает изменение статуса задачи
@@ -334,6 +587,7 @@ await thread.onStatusUpdated(cb)
 > Пример сообщения смотри [тут](./sorta-docs/thread-onStatusUpdated-message.md)
 
 #### <a name="user-content-thread-read-description">thread.readDescription</a>
+in developing
 #### <a name="user-content-thread-read">thread.read</a>
 
 Метод для получения задачи
@@ -353,9 +607,13 @@ console.log(response)
 > Пример ответа смотри [тут](./sorta-docs/thread-read-response.md)
 
 #### <a name="user-content-thread-set-budget">thread.setBudget</a>
+in developing
 #### <a name="user-content-thread-set-deadline">thread.setDeadline</a>
+in developing
 #### <a name="user-content-thread-set-description">thread.setDescription</a>
+in developing
 #### <a name="user-content-thread-set-priority">thread.setPriority</a>
+in developing
 #### <a name="user-content-thread-set-responsible">thread.setResponsible</a>
 
 Метод для установки ответственного за задачу
@@ -371,16 +629,20 @@ console.log(response)
 > Пример ответа смотри [тут](./sorta-docs/thread-setResponsible-response.md)
 
 #### <a name="user-content-thread-set-status">setStatus</a>
+in developing
 #### <a name="user-content-thread-set-stream">setStream</a>
+in developing
 #### <a name="user-content-thread-set-title">setTitle</a>
-
+in developing
 ---------
 
 
 ### file
 
 #### getGETUrl
+in developing
 #### getPUTUrl
+in developing
 
 ---------
 
@@ -388,10 +650,15 @@ console.log(response)
 ### mail
 
 #### <a name="user-content-mail-get-accounts">getAccounts</a>
+in developing
 #### <a name="user-content-mail-on-received">onReceived</a>
+in developing
 #### <a name="user-content-mail-on-sent">onSent</a>
+in developing
 #### <a name="user-content-mail-read">read</a>
+in developing
 #### <a name="user-content-mail-send">send</a>
+in developing
 
 ---------
 
@@ -399,6 +666,10 @@ console.log(response)
 ### telephony
 
 #### <a name="user-content-telephony-create-user">createUser</a>
+in developing
 #### <a name="user-content-telephony-delete-user">deleteUser</a>
+in developing
 #### <a name="user-content-telephony-get-user">getUser</a>
+in developing
 #### <a name="user-content-telephony-update-user">updateUser</a>
+in developing
