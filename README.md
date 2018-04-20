@@ -83,7 +83,10 @@ console.log(response) // { code: 200, message: 'OK', count: 1 }
 - **threadId** - id задачи;
 - **threadIds** - массив из нескольких id задач;
 - **streamId** - id потока;
-> в ответе поле **count** - кол-во комментариев
+> Пример ответа
+```js
+{ code: 200, message: 'OK', count: 1 }
+```
 
 <div style="border:1px,solid;"></div>
 
@@ -95,23 +98,23 @@ console.log(response) // { code: 200, message: 'OK', count: 1 }
 const { comment } = botClient
 const query = { threadId }
 const response = await comment.create(teamId, query)
-console.log(response) // { code: 200, message: 'OK', data: '5ad6f9be219171001f64dc0f' }
+console.log(response)
 ```
 
 где query может принимать параметры:
 - **streamId** - id потока (для публикации комментария в общем чате потока);
 - **threadId** - id задачи (для публикации комментария в задаче);
 - **to** - id пользователя в системе, может также принимать массив id пользователей (если указать только поле **to** то комментарий будет опубликован в *личных* сообщениях);
-- **att** - имеет вид типа: [{ type: 'text' data: { text: 'string' } }]
--- **type** - тим сообщения может быть *text*, *file*.
--- **data** - объект с текстом либо id файла
+- **att** - имеет вид типа: [{ type: 'text' data: { text: 'string' } }] (**type** - тип сообщения может быть *text*, *file*. **data** - объект с текстом либо id файла)
 
-> в ответе поле **data** - id комментария
+> Пример ответа
+```js
+{ code: 200, message: 'OK', data: {id: 'comment id'} }
+```
 
 #### <a name="user-content-comment-on-created">comment.onCreated</a>
 
 Метод который отлавливает созданные коментарии
-принимает в себя функцию обратного выхова (callback function)
 
 ```js
 const { comment } = botClient
@@ -125,7 +128,6 @@ await comment.onCreated(cb)
 #### <a name="user-content-comment-on-direct">comment.onDirect</a>
 
 Метод который отлавливает создание комментария в личные сообщения боту
-принимает в себя функцию обратного выхова (callback function)
 
 ```js
 const { comment } = botClient
@@ -146,7 +148,6 @@ await comment.onDirect(cb)
 #### <a name="user-content-comment-on-mention">comment.onMention</a>
 
 Метод который отлавливает создание комментария с упоминанием бота
-принимает в себя функцию обратного выхова (callback function)
 
 ```js
 const { comment } = botClient
@@ -168,7 +169,7 @@ await comment.onMention({keepBotRef: true}, cb)
 const { comment } = botClient
 const query = { id }
 const response = await comment.read(teamId, query)
-console.log(response) // { code: 200, message: 'OK', data: '5ad6f9be219171001f64dc0f' }
+console.log(response
 ```
 где query может принимать параметры:
 - **id** - id комментария (вернёт коментарий);
@@ -218,7 +219,6 @@ console.log(response)
   data: { insertedCount: 1, insertedId: 'new contact id' }
 }
 ```
-где insertedId - id созданного контакта
 
 #### <a name="user-content-contact-get-locale">contact.getLocale</a>
 
@@ -280,7 +280,7 @@ console.log(response)
 ```
 
 где query принимает следующие параметры:
-- **color** - цвет статуса (для этого обычно используем библиотеку randomColor(), либо любой цвет формата - #c0c0c0);
+- **color** - цвет статуса (для этого обычно используем библиотеку [randomColor](https://www.npmjs.com/package/randomcolor), либо любой цвет формата - #c0c0c0);
 - **name**- название статуса
 - **streamId** - id потока в который создаём статус
 - **type** - один из глобальных статусов *Wait*, *In progress*, *Done*
@@ -351,14 +351,13 @@ console.log(response)
 где query принимает следующие параметры:
 - **name**- название потока
 - **isEmpty** - по умолчанию поток создаётся с 3мя статусами, если указать данный параметр будет создан пустой поток
-- **settings** - подробнен про данный параметр смотри [тут](./sorta-docs/stream-create-settings.md)
+- **settings** - подробнен про параметр смотри [тут](./sorta-docs/stream-create-settings.md)
 
 > Пример ответа
 ```js
 {code: 200, message: "Ok", data: "id new stream"}
 ```
 
-name, settings, isEmpty
 #### <a name="user-content-stream-delete-user">stream.deleteUser</a>
 
 Метод для удаления участника из потока
@@ -373,7 +372,10 @@ console.log(response)
 - **id** - id статуса;
 - **user** - id пользователя которога надо удалить из участников потока
 
-> Пример ответа {code: 200, message: "OK"}
+> Пример ответа
+```js
+{ code: 200, message: "OK" }
+```
 
 #### <a name="user-content-stream-delete">stream.delete</a>
 
@@ -428,7 +430,7 @@ await stream.onUserSet({self: true}, cb)
 
 ```js
 const { stream } = botClient
-const query = { id: streamId }
+const query = { id: 'stream id' }
 const response = await stream.read(teamId, { query })
 console.log(response)
 ```
@@ -469,7 +471,10 @@ console.log(response)
 - **id** - id статуса;
 - **name** - новое имя потока
 
-> Пример ответа {code: 200, message: "OK"}
+> Пример ответа
+```js
+{ code: 200, message: "OK" }
+```
 
 #### <a name="user-content-stream-set-user">stream.setUser</a>
 
@@ -485,7 +490,10 @@ console.log(response)
 - **id** - id статуса;
 - **user** - id пользователя которого надо добавить в участники потока
 
-> Пример ответа {code: 200, message: "OK"}
+> Пример ответа
+```js
+{ code: 200, message: "OK" }
+```
 
 ----------
 
