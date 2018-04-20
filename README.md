@@ -138,7 +138,11 @@ await comment.onDirect(cb)
 > Пример сообщения смотри [тут](./sorta-docs/onDirect-message.md)
 
 #### <a name="user-content-comment-on-echo">comment.onEcho</a>
-in developing
+
+Метод проверки работаспособности бота
+
+при получении личного сообщения с пометкой /echo botClient астоматически ответит тем же сообщением
+
 #### <a name="user-content-comment-on-mention">comment.onMention</a>
 
 Метод который отлавливает создание комментария с упоминанием бота
@@ -372,7 +376,20 @@ console.log(response)
 > Пример ответа {code: 200, message: "OK"}
 
 #### <a name="user-content-stream-delete">stream.delete</a>
-in developing
+
+Метод для удаления потока
+
+```js
+const { stream } = botClient
+const response = await stream.delete(teamId, { id: 'stream id' })
+console.log(response)
+```
+
+> Пример ответа
+```js
+{ code: 200, message: "OK" }
+```
+
 #### <a name="user-content-stream-on-user-deleted">stream.onUserDeleted</a>
 
 Метод который отлавливает удаление пользователя из потока
@@ -423,7 +440,21 @@ console.log(response)
 > Пример ответа смотри [тут](./sorta-docs/stream-read-response.md)
 
 #### <a name="user-content-stream-set-admin">stream.setAdmin</a>
-in developing
+
+Метод для предоставления пользователю прав администратора потока
+
+```js
+const { stream } = botClient
+const query = { id: 'stream id', userId: 'user id' }
+const response = await stream.setAdmin(teamId, { query })
+console.log(response)
+```
+
+> Пример ответа
+```js
+{code: 200, message: "OK"}
+```
+
 #### <a name="user-content-stream-set-name">stream.setName</a>
 
 Метод для изменении имени потока
@@ -462,11 +493,62 @@ console.log(response)
 ### team
 
 #### <a name="user-content-team-invite-user">team.inviteUser</a>
-in developing
+
+Мотод для приглашения пользователя в систему workonflow
+при успешном выполнении на почту пользователя придёт письмо с приглашением в тиму панели workonflow
+
+```js
+const { team } = botClient
+const query = { email: 'user email', name: 'user name' }
+const response = await stream.inviteUser(teamId, query)
+console.log(response)
+```
+> Пример ответа
+```js
+{
+  code: 200,
+  message: 'OK',
+  data: {
+    accountId: "account id"
+    contactId: "user id"
+
+  }
+}
+```
+
 #### <a name="user-content-team-on-admin-status-given">team.onAdminStatusGiven</a>
-in developing
+
+Метод который отлавливает получение пользователем прав администратора тимы
+
+```js
+const { team } = botClient
+const cb = message => {
+  console.log(message)
+}
+team.onAdminStatusGiven(cb)
+```
+
+> Пример сообщения
+```js
+  data: { userId: 'user id' }
+```
+
 #### <a name="user-content-team-on-admin-status-revoked">team.onAdminStatusRevoked</a>
-in developing
+
+Метод который отлавливает отключение прав администратора тимы у пользователя
+
+```js
+const { team } = botClient
+const cb = message => {
+  console.log(message)
+}
+team.onAdminStatusGiven(cb)
+```
+> Пример сообщения
+```js
+  data: { userId: 'user id' }
+```
+
 #### <a name="user-content-team-on-user-invited">team.onUserInvited</a>
 
 Метод который отлавливает добавление пользователя в тиму
@@ -555,7 +637,19 @@ console.log(response)
 ```
 
 #### <a name="user-content-thread-on-budget-updated">thread.onBudgetUpdated</a>
-in developing
+
+Метод который отлавливает изменение бюджета задачи
+
+```js
+const { thread } = botClient
+const cb = message => {
+  console.log(message)
+}
+await thread.onBudgetUpdated(cb)
+```
+
+> Пример сообщения смотри [тут](./sorta-docs/thread-onBudgetUpdated-message.md)
+
 #### <a name="user-content-thread-on-created">thread.onCreated</a>
 
 Метод который отлавливает создание задачи
@@ -571,7 +665,19 @@ await thread.onCreated(cb)
 > Пример сообщения смотри [тут](./sorta-docs/thread-onCreated-message.md)
 
 #### <a name="user-content-thread-on-deadline-updated">thread.onDeadlineUpdated</a>
-in developing
+
+Метод который отлавливает изменение "deadline" задачи
+
+```js
+const { thread } = botClient
+const cb = message => {
+  console.log(message)
+}
+await thread.onDeadlineUpdated(cb)
+```
+
+> Пример сообщения смотри [тут](./sorta-docs/thread-onDeadlineUpdated-message.md)
+
 #### <a name="user-content-thread-status-updated">thread.onStatusUpdated</a>
 
 Метод который отлавливает изменение статуса задачи
@@ -587,7 +693,18 @@ await thread.onStatusUpdated(cb)
 > Пример сообщения смотри [тут](./sorta-docs/thread-onStatusUpdated-message.md)
 
 #### <a name="user-content-thread-read-description">thread.readDescription</a>
-in developing
+
+Метод для получения описания задачи
+
+```js
+const { thread } = botClient
+const query = { id: 'thread id' }
+const response = await thread.readDescription(teamId, { query })
+console.log(response)
+```
+
+> Пример ответа смотри [тут](./sorta-docs/thread-readDescription-response.md)
+
 #### <a name="user-content-thread-read">thread.read</a>
 
 Метод для получения задачи
@@ -607,13 +724,75 @@ console.log(response)
 > Пример ответа смотри [тут](./sorta-docs/thread-read-response.md)
 
 #### <a name="user-content-thread-set-budget">thread.setBudget</a>
-in developing
+
+Метод для изменения бюджета задачи
+
+```js
+const { thread } = botClient
+const query = { id: threadId, budget: 10000 }
+const response = await thread.setBudget(teamId, { query })
+console.log(response)
+```
+
+где query может принимать параметры:
+- **id** - id задачи;
+- **budget** - число бюджета задачи
+
+> Пример ответа смотри [тут](./sorta-docs/thread-setBudget-response.md)
+
 #### <a name="user-content-thread-set-deadline">thread.setDeadline</a>
-in developing
+
+Метод для изменения "deadline" задачи
+
+```js
+const { thread } = botClient
+const query = { id: threadId, timestamp: [null, 1524902400000] }
+const response = await thread.setDeadline(teamId, { query })
+console.log(response)
+```
+
+где query может принимать параметры:
+- **id** - id задачи;
+- **timestamp** - массив даты в формате timestamp 1й елемент начало задачи, 2й её оконьчанее (если оставить 1й едемент как null то у задачи в панели отображатся будет только deadline) 
+
+> Пример ответа смотри [тут](./sorta-docs/thread-setDeadline-response.md)
+
+
 #### <a name="user-content-thread-set-description">thread.setDescription</a>
-in developing
+
+Метод для изменения описания задачи (метод в разработке)
+
+```js
+const { thread } = botClient
+const query = {
+  content: 'content in JSON format',
+  id: "thread id"
+}
+const response = await thread.setDescription(teamId, { query })
+console.log(response)
+```
+
+> Пример ответа
+```js
+{code: 200, message: "OK", data: "description id"}
+```
 #### <a name="user-content-thread-set-priority">thread.setPriority</a>
-in developing
+
+Метод для изменения приоритета задачи
+
+```js
+const { thread } = botClient
+const query = { id: threadId, priority: "HIGH" }
+const response = await thread.setPriority(teamId, { query })
+console.log(response)
+```
+
+где query может принимать параметры:
+- **id** - id задачи;
+- **priority** - приоритет (один из двех вариантов: "HIGH" или "NORMAL" обязательно в верхнем регистре)
+
+> Пример ответа смотри [тут](./sorta-docs/thread-setPriority-response.md)
+
 #### <a name="user-content-thread-set-responsible">thread.setResponsible</a>
 
 Метод для установки ответственного за задачу
@@ -628,48 +807,282 @@ console.log(response)
 
 > Пример ответа смотри [тут](./sorta-docs/thread-setResponsible-response.md)
 
-#### <a name="user-content-thread-set-status">setStatus</a>
-in developing
-#### <a name="user-content-thread-set-stream">setStream</a>
-in developing
-#### <a name="user-content-thread-set-title">setTitle</a>
-in developing
+#### <a name="user-content-thread-set-status">thread.setStatus</a>
+
+Метод для изменения статуса задачи
+
+```js
+const { thread } = botClient
+const query = { id: threadId, statusId: "status id" }
+const response = await thread.setStatus(teamId, { query })
+console.log(response)
+```
+
+где query может принимать параметры:
+- **id** - id задачи;
+- **statusId** - id статуса
+
+> Пример ответа смотри [тут](./sorta-docs/thread-setResponsible-response.md)
+
+#### <a name="user-content-thread-set-stream">thread.setStream</a>
+
+Метод для переноса задачи в другой поток
+
+```js
+const { thread } = botClient
+const query = { id: threadId, streamId: "stream id" }
+const response = await thread.setStream(teamId, { query })
+console.log(response)
+```
+
+где query может принимать параметры:
+- **id** - id задачи;
+- **streamId** - id потока
+
+> Пример ответа смотри [тут](./sorta-docs/thread-setResponsible-response.md)
+
+#### <a name="user-content-thread-set-title">thread.setTitle</a>
+
+Метод для изменения имени задачи
+
+```js
+const { thread } = botClient
+const query = { id: threadId, title: "new name stream" }
+const response = await thread.setTitle(teamId, { query })
+console.log(response)
+```
+
+где query может принимать параметры:
+- **id** - id задачи;
+- **title** - новое имя потока
+
+> Пример ответа смотри [тут](./sorta-docs/thread-setResponsible-response.md)
+
 ---------
 
 
 ### file
 
 #### getGETUrl
-in developing
+
+Метод для получения url файла с [Amazon](https://www.amazon.com/)
+
+```js
+const { file } = botClient
+const query = { id: 'file id' }
+const response = await thread.getGETUrl(teamId, query)
+console.log(response)
+```
+где query может принимать параметры:
+- **id** - id файла;
+- **ids** - массив id файлов
+
+> Пример ответа смотри [тут](./sorta-docs/getGETUrl-response.md)
+
 #### getPUTUrl
-in developing
+
+Метод получения url для загрузки файла на [Amazon](https://www.amazon.com/)
+
+```js
+const { file } = botClient
+const query = {
+  authorId: "user id",
+  filename: "fileName.format",
+  size: "number size",
+  streamId: "stream id",
+  threadId: "thread id"
+}
+const response = await thread.getPUTUrl(teamId, query)
+console.log(response)
+```
+
+> Пример ответа смотри [тут](./sorta-docs/getGETUrl-response.md)
 
 ---------
 
 
 ### mail
 
-#### <a name="user-content-mail-get-accounts">getAccounts</a>
-in developing
-#### <a name="user-content-mail-on-received">onReceived</a>
-in developing
-#### <a name="user-content-mail-on-sent">onSent</a>
-in developing
-#### <a name="user-content-mail-read">read</a>
-in developing
-#### <a name="user-content-mail-send">send</a>
-in developing
+#### <a name="user-content-mail-get-accounts">mail.getAccounts</a>
+
+Метод для получения почтовых каналов
+
+```js
+const { mail } = botClient
+const query = { id: 'user id' }
+const response = await mail.getAccounts(teamId, query)
+console.log(response)
+```
+где query может принимать параметры:
+- **id** - id пользователя (вернёт массив доступных каналов);
+- **ids** - массив id пользователей (аналогично **id**);
+- **email** - почта канала (вернёт канал с указанной почтой)
+
+> Пример ответа смотри [тут](./sorta-docs/mail-getAccounts-response.md)
+
+#### <a name="user-content-mail-on-received">mail.onReceived</a>
+
+Метод который отлавливает получение письма по почтовому каналу
+
+```js
+const { comment } = botClient
+const cb = message => {
+  console.log(message)
+}
+comment.onReceived(cb)
+```
+
+> Пример сообщения
+
+```js
+{
+  code: 200,
+  message: 'OK',
+  content:{ id: "mail id", conversationId: "conversation id" }
+}
+```
+
+#### <a name="user-content-mail-on-sent">mail.onSent</a>
+
+Метод который отлавливает отправку письма по почтовому каналу из панели workonflow
+
+```js
+const { comment } = botClient
+const cb = message => {
+  console.log(message)
+}
+comment.onSent(cb)
+```
+
+> Пример сообщения
+
+```js
+{
+  code: 200,
+  message: 'OK',
+  content:{ id: "mail id", conversationId: "conversation id" }
+}
+```
+
+#### <a name="user-content-mail-read">mail.read</a>
+
+Метод для получения почтовых каналов
+
+```js
+const { mail } = botClient
+const query = { id: 'mail id' }
+const response = await mail.read(teamId, query)
+console.log(response)
+```
+где query может принимать параметры:
+- **id** - id письма;
+- **ids** - массив id писем
+
+> Пример ответа смотри [тут](./sorta-docs/mail-read-response.md)
+
+#### <a name="user-content-mail-send">mail.send</a>
+
+Метод для получения почтовых каналов
+
+```js
+const { mail } = botClient
+const query = {
+  from: "channel email",
+  html: "<div><p>some text</p></div>",
+  messageId: "",
+  subject: "some subject",
+  text: "alt text",
+  threadId: "thread id",
+  to: "contact email"
+}
+const response = await mail.read(teamId, query)
+console.log(response)
+```
+где query должен принимать параметры:
+- **from** - необходимо указать почту канала;
+- **html** - html разметка письма (строкой!) если не указывать в письме будет отображатся параметр **text** ;
+- **messageId** - id письма в формате почтового клиента (если неизвестно - оставить пустую строку);
+- **subject** - тема письма;
+- **text** - текст письма, отображается если нет **html** разметки;
+- **threadId** - id задачи;
+- **to** - почта адресата
+
+> Пример ответа
+```js
+{code: 200, message: "OK"}
+```
 
 ---------
 
 
 ### telephony
 
-#### <a name="user-content-telephony-create-user">createUser</a>
-in developing
-#### <a name="user-content-telephony-delete-user">deleteUser</a>
-in developing
-#### <a name="user-content-telephony-get-user">getUser</a>
-in developing
-#### <a name="user-content-telephony-update-user">updateUser</a>
-in developing
+#### <a name="user-content-telephony-create-user">telephony.createUser</a>
+
+Метод SIP пользователя (метод на стадии разработки)
+
+```js
+const { telephony } = botClient
+const query = {
+  username: 'user name',
+  password: 'user pass',
+  domain: 'domain',
+  contactId: 'user id'
+}
+const response = await telephony.createUser(teamId, query)
+console.log(response)
+```
+
+> Пример ответа
+```js
+{code: 200, message: "OK"}
+```
+
+#### <a name="user-content-telephony-delete-user">telephony.deleteUser</a>
+
+Метод удаляющий SIP пользователя из телефонии (метод на стадии разработки)
+
+```js
+const { telephony } = botClient
+const query = { id: 'sip id' }
+const response = await telephony.deleteUser(teamId, query)
+console.log(response)
+```
+
+> Пример ответа
+```js
+{code: 200, message: "OK"}
+```
+
+#### <a name="user-content-telephony-get-user">telephony.getUser</a>
+
+Метод для получения SIP пользователя (метод на стадии разработки)
+
+```js
+const { telephony } = botClient
+const query = { id: 'sip id', username: 'sip user name', contactId: 'user id' }
+const response = await telephony.getUser(teamId, query)
+console.log(response)
+```
+
+#### <a name="user-content-telephony-update-user">telephony.updateUser</a>
+
+Метод SIP пользователя (метод на стадии разработки)
+
+```js
+const { telephony } = botClient
+const query = {
+  username: 'user name',
+  password: 'user pass',
+  domain: 'domain',
+  contactId: 'user id'
+}
+const response = await telephony.updateUser(teamId, query)
+console.log(response)
+```
+
+> Пример ответа
+```js
+{code: 200, message: "OK"}
+```
+-----------
